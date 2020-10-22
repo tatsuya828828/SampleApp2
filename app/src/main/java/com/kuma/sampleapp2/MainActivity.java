@@ -17,15 +17,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button btn = findViewById(R.id.btnCurrent);
-        btn.setOnClickListener(
-            new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    TextView txt = findViewById(R.id.txtResult);
-                    txt.setText(new Date().toString());
-                }
-            }
-        );
+        btn.setOnClickListener(view -> {
+            TextView txt = findViewById(R.id.txtResult);
+            txt.setText(new Date().toString());
+        });
     }
 
     public  void btnCurrent_onClick(View view) {
