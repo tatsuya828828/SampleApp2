@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:autoLink="all"
-        android: android:lineSpacingMultiplier="1.5"
+        android:lineSpacingMultiplier="1.5"
         android:text="URL: https://o-space.jp&#xA;連絡先: kkjy011894@gmail.com"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
