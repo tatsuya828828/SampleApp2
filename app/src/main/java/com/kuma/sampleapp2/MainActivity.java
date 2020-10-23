@@ -3,6 +3,7 @@ package com.kuma.sampleapp2;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
             btnCurrent_onClick(view);
             TextView txt = findViewById(R.id.txtResult);
             txt.setText(new Date().toString());
+            Log.d("CurrentTime", new Date().toString());
         });
     }
 
