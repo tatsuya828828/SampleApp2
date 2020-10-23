@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Date;
 
@@ -18,14 +19,16 @@ public class MainActivity extends AppCompatActivity {
 
         Button btn = findViewById(R.id.btnCurrent);
         btn.setOnClickListener(view -> {
+            btnCurrent_onClick(view);
             TextView txt = findViewById(R.id.txtResult);
             txt.setText(new Date().toString());
         });
     }
 
-    public  void btnCurrent_onClick(View view) {
-        TextView txt = findViewById(R.id.txtResult);
-        txt.setText(new Date().toString());
+    public void btnCurrent_onClick(View view) {
+        Toast toast = Toast.makeText(
+                this, new Date().toString(), Toast.LENGTH_LONG);
+        toast.show();
     }
 
     // 画面が破棄される前の状態を保存
