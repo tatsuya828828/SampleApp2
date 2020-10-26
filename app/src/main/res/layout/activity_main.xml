@@ -6,13 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!--  ImageViewの拡大縮小をしたい場合ははandroid:scaleX/android:scaleY属性を利用すれば良い
-          また、android:alpha属性を利用すると画像の透明度を指定することができる(0:透明、1:不透明(デフォルト))-->
-
+    <!--  複数行のテキストエリアを作成したい場合、android:inputType属性にtextMultiLineを指定した上で、
+          android:lines属性で行数を指定する。  -->
     <TextView
         android:id="@+id/txtResult"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="216dp"
@@ -34,6 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txtName"
         app:srcCompat="@drawable/button_icon" />
 
+    <!--  android:inputType属性を指定するとテキストボックスに入力するデータの種類を限定することができる  -->
     <EditText
         android:id="@+id/txtName"
         android:layout_width="wrap_content"
@@ -45,6 +45,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtResult" />
+        app:layout_constraintTop_toBottomOf="@+id/txtResult">
+        <!--    requestFocus要素を明記しておくと、アプリ起動時にデフォルトでフォーカスをセットできる    -->
+        <requestFocus />
+    </EditText>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
