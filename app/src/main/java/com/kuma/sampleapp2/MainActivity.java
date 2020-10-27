@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import java.util.Date;
 
@@ -23,9 +24,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // チェックボックスを取得
-        CheckBox checkBox = findViewById(R.id.checkBox);
+        ToggleButton toggleButton = findViewById(R.id.toggleButton);
         // チェックボックスに対してイベントリスナーを登録
-        checkBox.setOnCheckedChangeListener(
+        toggleButton.setOnCheckedChangeListener(
                 //  CompoundButtonオブジェクトは、チェックボックスやラジオボタン、トグルボタンなど、
                 //  オンオフの状態を持つボタンのスーパークラス
                 new CompoundButton.OnCheckedChangeListener() {
