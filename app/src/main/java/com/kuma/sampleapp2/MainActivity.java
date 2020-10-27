@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -24,9 +25,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // チェックボックスを取得
-        ToggleButton toggleButton = findViewById(R.id.toggleButton);
+        Switch switch1 = findViewById(R.id.switch1);
         // チェックボックスに対してイベントリスナーを登録
-        toggleButton.setOnCheckedChangeListener(
+        switch1.setOnCheckedChangeListener(
                 //  CompoundButtonオブジェクトは、チェックボックスやラジオボタン、トグルボタンなど、
                 //  オンオフの状態を持つボタンのスーパークラス
                 new CompoundButton.OnCheckedChangeListener() {

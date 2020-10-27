@@ -6,14 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ToggleButton
-        android:id="@+id/toggleButton"
-        android:layout_width="0dp"
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ToggleButton"
-        android:textOn="メール送信をオンにする"
-        android:textOff="メール送信をオフにする"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:showText="true"
+        android:text="メール送信"
+        android:textOff="Off"
+        android:textOn="On"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="6dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
