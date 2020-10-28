@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        // Spinnerに項目リストを登録するメソッドの呼び出し
         createSpinner();
     }
 
