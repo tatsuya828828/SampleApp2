@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RatingBar;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -33,40 +34,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // Spinnerに項目リストを登録するメソッドの呼び出し
-        createSpinner();
-    }
 
-    // Spinnerに項目リストを登録するメソッド
-    private void createSpinner() {
-        ArrayList<String> list = new ArrayList<>();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd", Locale.JAPAN);
-        Calendar calendar = Calendar.getInstance();
-        // 明日から10日後の日付リストを生成
-        for(int i = 1; i < 11; i++) {
-            calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + 1);
-            list.add(format.format(calendar.getTime()));
-        }
-        // 配列をウィジェットに渡す準備
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_dropdown_item, list);
-        // アダプター経由でSpinnerリストを登録
-        Spinner spinner = findViewById(R.id.spinner);
-        spinner.setAdapter(adapter);
-
-        // Spinner選択時の処理を定義
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Spinner spinner = (Spinner) parent;
-                Toast.makeText(MainActivity.this, String.format("選択項目:%s"
-                        , spinner.getSelectedItem()), Toast.LENGTH_SHORT).show();
+        // レーティングバーを取得
+        RatingBar rate = findViewById(R.id.ratingBar);
+        // レーティングバーにイベントリスナーを登録
+        rate.setOnRatingBarChangeListener(
+            new RatingBar.OnRatingBarChangeListener(){
+                public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser){
+                    Toast.makeText(MainActivity.this, String.format(
+                            Locale.JAPAN, "現在の評価は%sです。", rating),
+                            Toast.LENGTH_SHORT).show();
+                }
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        );
     }
 }
