@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -34,18 +35,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // レーティングバーを取得
-        RatingBar rate = findViewById(R.id.ratingBar);
-        // レーティングバーにイベントリスナーを登録
-        rate.setOnRatingBarChangeListener(
-            new RatingBar.OnRatingBarChangeListener(){
-                public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser){
-                    Toast.makeText(MainActivity.this, String.format(
-                            Locale.JAPAN, "現在の評価は%sです。", rating),
-                            Toast.LENGTH_SHORT).show();
-                }
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btn_onClick(view);
             }
-        );
+        });
+    }
+
+    // ボタンクリック時の処理
+    public void btn_onClick(View view) {
+        WebView webView = findViewById(R.id.webview);
+        // クリックすると、指定したページを読み込む
+        webView.loadUrl("https://o-space.jp/");
     }
 }
