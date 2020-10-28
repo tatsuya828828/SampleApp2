@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -20,6 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -30,29 +34,39 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // スピナーを取得
-        Spinner sp = findViewById(R.id.spinner);
-        // スピナーに対してイベントリスナーを登録
-        sp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            // 項目が選択された場合の処理
-            // onItemSelectedメソッドでは選択された項目が格納されている
+        createSpinner();
+    }
+
+    // Spinnerに項目リストを登録するメソッド
+    private void createSpinner() {
+        ArrayList<String> list = new ArrayList<>();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd", Locale.JAPAN);
+        Calendar calendar = Calendar.getInstance();
+        // 明日から10日後の日付リストを生成
+        for(int i = 1; i < 11; i++) {
+            calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + 1);
+            list.add(format.format(calendar.getTime()));
+        }
+        // 配列をウィジェットに渡す準備
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_dropdown_item, list);
+        // アダプター経由でSpinnerリストを登録
+        Spinner spinner = findViewById(R.id.spinner);
+        spinner.setAdapter(adapter);
+
+        // Spinner選択時の処理を定義
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Spinner spinner = (Spinner) parent;
-                // 選択項目を取得し、その値をトースト表示
-                // Spinnerが取得できてしまえば、あとはそのgetSelectedItemメソッドで選択された項目を取得できるため
-                // これを整形してトースト表示する
-                // getSelectedItemメソッドの戻り値はObject型のため、取得した値は必要に応じてString型にキャストする
-                Toast.makeText(MainActivity.this, String.format("選択項目:%s", spinner.getSelectedItem()),
-                Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, String.format("選択項目:%s"
+                        , spinner.getSelectedItem()), Toast.LENGTH_SHORT).show();
             }
 
-            // 項目が選択されなかった場合の処理
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
-
     }
 }
