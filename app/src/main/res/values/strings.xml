@@ -1,6 +1,8 @@
 <resources>
-    <string name="app_name">SampleApp2</string>
-    <string name="hello_world">こんにちは、世界！</string>
-    <string name="btnCurrent">現在時刻</string>
-
+    <string name="spinner_prompt">OSを選択してください</string>
+    <string-array name="spinner_items">
+        <item>Windows</item>
+        <item>Linux</item>
+        <item>macOS</item>
+    </string-array>
 </resources>
