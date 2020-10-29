@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">SampleApp2</string>
-    <string name="hello_world">こんにちは、世界！</string>
+    <string-array name="spice">
+        <item>胡椒</item>
+        <item>ターメリック</item>
+        <item>コリアンダー</item>
+        <item>生姜</item>
+        <item>ニンニク</item>
+        <item>サフラン</item>
+    </string-array>
 </resources>
