@@ -7,25 +7,12 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
-
-    <WebView
-        android:id="@+id/webview"
-        android:layout_width="414dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="#52ACF3"
-        android:backgroundTint="#FFFFFF"
-        android:text="Home"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <!--  ListViewに配列リソースを紐づけるには、android:entries属性に
+          @array/リソース名を設定する-->
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:entries="@array/spice"
+        tools:layout_editor_absoluteX="17dp"
+        tools:layout_editor_absoluteY="63dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
