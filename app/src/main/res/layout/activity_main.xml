@@ -10,9 +10,9 @@
     <!--  ListViewに配列リソースを紐づけるには、android:entries属性に
           @array/リソース名を設定する-->
     <ListView
+        android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:entries="@array/spice"
         tools:layout_editor_absoluteX="17dp"
         tools:layout_editor_absoluteY="63dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
