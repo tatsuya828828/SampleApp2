@@ -15,5 +15,5 @@
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="17dp"
         tools:layout_editor_absoluteY="63dp"
-        android:choiceMode="multipleChoice"/>
+        android:choiceMode="multipleChoiceModal"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

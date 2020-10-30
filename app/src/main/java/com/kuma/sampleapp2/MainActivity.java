@@ -4,8 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -50,46 +54,43 @@ public class MainActivity extends AppCompatActivity {
         // 配列アダプターを作成&ListViewに登録
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 // simple_list_item_multiple_choiceを適用
-            this, android.R.layout.simple_list_item_multiple_choice, data);
+            this, android.R.layout.simple_list_item_checked, data);
         ListView list = findViewById(R.id.list);
         list.setAdapter(adapter);
-
-        // リスト項目をタッチした時の処理を定義
-        list.setOnItemClickListener(
-            new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    // リスト配下の項目を全て取り出して、
-                    // それぞれの項目が選択されていればその値を取り出す、という処理が必要となる
-                    // ListView配下の項目数はgetChildCount、i番目の項目はgetChildAtメソッドで取得できる。
-                    StringBuilder msg = new StringBuilder("選択:");
-                    // 0から順番にリストの項目を取得しCheckedTextViewに型キャストした上で、
-                    // isCheckedメソッドでチェックされているかどうかを判定する
-                    // もしチェックされている場合には、
-                    // 項目テキスト(getTextメソッド)を変数msgにカンマ区切りで追加していく。
-                    for(int i = 0; i < list.getChildCount(); i++) {
-                        CheckedTextView check = (CheckedTextView) list.getChildAt(i);
-                        if(check.isChecked()) {
-                            msg.append(check.getText()).append(",");
-                        }
-                    }
-                    // msg.substring(0, msg.length() -1)では文字列末尾のカンマを除去している
-                    Toast.makeText(MainActivity.this, msg.substring(0, msg.length() -1),
-                            Toast.LENGTH_LONG).show();
-                }
-            }
-        );
-
-        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        list.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
+            // 選択項目のチェック状態が変化した時
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                CharSequence msg = ((TextView) view).getText();
-                Toast.makeText(
-                        MainActivity.this, String.format("削除:%s", msg.toString()),
-                        Toast.LENGTH_SHORT).show();
-                adapter.remove((String) ((TextView) view).getText());
-                return false;
+            public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {}
+            // アクションモードを起動する時
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                return true;
+            }
+            // アクションモードの準備時
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                return true;
+            }
+            // 項目をクリックした時
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                return true;
+            }
+            // アクションモードを終了した時
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+                StringBuilder msg = new StringBuilder("選択:");
+                // チェック状態の項目だけを追加
+                for(int i = 0; i < list.getChildCount(); i++) {
+                    CheckedTextView check = (CheckedTextView) list.getChildAt(i);
+                    if(check.isChecked()) {
+                        msg.append(check.getText()).append(",");
+                    }
+                }
+                Toast.makeText(MainActivity.this, msg.substring(0, msg.length() -1),
+                        Toast.LENGTH_LONG).show();
             }
         });
+
     }
 }
