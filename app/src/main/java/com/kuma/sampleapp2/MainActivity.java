@@ -52,13 +52,18 @@ public class MainActivity extends AppCompatActivity {
         ListView list = findViewById(R.id.list);
         list.setAdapter(adapter);
 
-        // リスト項目をタッチした時の処理を定義
-        list.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
+        // リスト項目をタッチ、した時の処理を定義
+        // Longをつけることで長押し時の処理を設定できる
+        list.setOnItemLongClickListener(
+                new AdapterView.OnItemLongClickListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                         // リスト項目を取得&削除
                         adapter.remove((String)((TextView) view).getText());
+                        // 戻り値にfalseを指定した場合は、同種の処理(通常のタッチ)も行う
+                        // つまりOnItemLongClickの処理後OnItemClickの処理を行う
+                        // trueを指定した場合は、長押し時の処理のみを行う
+                        return false;
                     }
                 }
         );
