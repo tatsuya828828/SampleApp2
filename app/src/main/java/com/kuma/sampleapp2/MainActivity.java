@@ -49,23 +49,31 @@ public class MainActivity extends AppCompatActivity {
 
         // 配列アダプターを作成&ListViewに登録
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                // simple_list_item_multiple_choiceを適用
             this, android.R.layout.simple_list_item_multiple_choice, data);
         ListView list = findViewById(R.id.list);
         list.setAdapter(adapter);
 
-        // リスト項目をタッチ、した時の処理を定義
-        // Longをつけることで長押し時の処理を設定できる
+        // リスト項目をタッチした時の処理を定義
         list.setOnItemClickListener(
             new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    // リスト配下の項目を全て取り出して、
+                    // それぞれの項目が選択されていればその値を取り出す、という処理が必要となる
+                    // ListView配下の項目数はgetChildCount、i番目の項目はgetChildAtメソッドで取得できる。
                     StringBuilder msg = new StringBuilder("選択:");
+                    // 0から順番にリストの項目を取得しCheckedTextViewに型キャストした上で、
+                    // isCheckedメソッドでチェックされているかどうかを判定する
+                    // もしチェックされている場合には、
+                    // 項目テキスト(getTextメソッド)を変数msgにカンマ区切りで追加していく。
                     for(int i = 0; i < list.getChildCount(); i++) {
                         CheckedTextView check = (CheckedTextView) list.getChildAt(i);
                         if(check.isChecked()) {
                             msg.append(check.getText()).append(",");
                         }
                     }
+                    // msg.substring(0, msg.length() -1)では文字列末尾のカンマを除去している
                     Toast.makeText(MainActivity.this, msg.substring(0, msg.length() -1),
                             Toast.LENGTH_LONG).show();
                 }
