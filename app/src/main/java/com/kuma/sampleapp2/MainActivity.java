@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         // 配列アダプターを作成&ListViewに登録
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
-            this, android.R.layout.simple_list_item_single_choice, data);
+            this, android.R.layout.simple_list_item_multiple_choice, data);
         ListView list = findViewById(R.id.list);
         list.setAdapter(adapter);
 
@@ -58,10 +59,15 @@ public class MainActivity extends AppCompatActivity {
             new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    CharSequence msg = ((TextView) view).getText();
-                    Toast.makeText(
-                            MainActivity.this, String.format("選択:%s", msg.toString()),
-                            Toast.LENGTH_SHORT).show();
+                    StringBuilder msg = new StringBuilder("選択:");
+                    for(int i = 0; i < list.getChildCount(); i++) {
+                        CheckedTextView check = (CheckedTextView) list.getChildAt(i);
+                        if(check.isChecked()) {
+                            msg.append(check.getText()).append(",");
+                        }
+                    }
+                    Toast.makeText(MainActivity.this, msg.substring(0, msg.length() -1),
+                            Toast.LENGTH_LONG).show();
                 }
             }
         );
