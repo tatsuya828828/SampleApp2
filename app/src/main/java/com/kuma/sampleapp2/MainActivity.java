@@ -51,5 +51,16 @@ public class MainActivity extends AppCompatActivity {
             this, android.R.layout.simple_list_item_1, data);
         ListView list = findViewById(R.id.list);
         list.setAdapter(adapter);
+
+        // リスト項目をタッチした時の処理を定義
+        list.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        // リスト項目を取得&削除
+                        adapter.remove((String)((TextView) view).getText());
+                    }
+                }
+        );
     }
 }
