@@ -71,5 +71,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         );
+
+        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                CharSequence msg = ((TextView) view).getText();
+                Toast.makeText(
+                        MainActivity.this, String.format("削除:%s", msg.toString()),
+                        Toast.LENGTH_SHORT).show();
+                adapter.remove((String) ((TextView) view).getText());
+                return false;
+            }
+        });
     }
 }
