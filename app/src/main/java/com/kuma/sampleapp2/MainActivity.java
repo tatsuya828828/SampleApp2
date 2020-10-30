@@ -48,24 +48,22 @@ public class MainActivity extends AppCompatActivity {
 
         // 配列アダプターを作成&ListViewに登録
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
-            this, android.R.layout.simple_list_item_1, data);
+            this, android.R.layout.simple_list_item_single_choice, data);
         ListView list = findViewById(R.id.list);
         list.setAdapter(adapter);
 
         // リスト項目をタッチ、した時の処理を定義
         // Longをつけることで長押し時の処理を設定できる
-        list.setOnItemLongClickListener(
-                new AdapterView.OnItemLongClickListener() {
-                    @Override
-                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                        // リスト項目を取得&削除
-                        adapter.remove((String)((TextView) view).getText());
-                        // 戻り値にfalseを指定した場合は、同種の処理(通常のタッチ)も行う
-                        // つまりOnItemLongClickの処理後OnItemClickの処理を行う
-                        // trueを指定した場合は、長押し時の処理のみを行う
-                        return false;
-                    }
+        list.setOnItemClickListener(
+            new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    CharSequence msg = ((TextView) view).getText();
+                    Toast.makeText(
+                            MainActivity.this, String.format("選択:%s", msg.toString()),
+                            Toast.LENGTH_SHORT).show();
                 }
+            }
         );
     }
 }
