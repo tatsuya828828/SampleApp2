@@ -22,6 +22,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RatingBar;
+import android.widget.SearchView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -57,26 +58,33 @@ public class MainActivity extends AppCompatActivity {
             this, android.R.layout.simple_list_item_checked, data);
         ListView list = findViewById(R.id.list);
         list.setAdapter(adapter);
-        // list.setSelection(値)と設定することで値の部分が画面の先頭に来るように自動スクロールすることができる
 
-        // リスト末尾までスクロールしたら、次の項目を追加
-        list.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {}
+        // フィルター機能を有効化
+        list.setTextFilterEnabled(true);
 
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                // firstVisibleItem + visibleItemCountは、現在ヒュ時されているリスト末尾を表す。
-                // よって、条件式全体では、表示中のリスト末尾の3項目先が
-                // リストの最終項目を超えたらリスト項目を追加しろという意味になる。
-                if(firstVisibleItem + visibleItemCount + 3 > totalItemCount) {
-                    adapter.add("七味");
-                    adapter.add("塩");
-                    adapter.add("醤油");
+        // 検索ボックスに入力された時の処理を定義
+        SearchView searchView = findViewById(R.id.search);
+        // フィルターに検索ボックスからの入力値を引き渡すには、OnQueryTextListenerイベントリスナーを利用する。
+        // これは、SearchViewへの入力を検知するためのイベントリスナーである。
+        searchView.setOnQueryTextListener(
+            new SearchView.OnQueryTextListener() {
+                // サブミットボタンをクリックした時(今回はないので不使用)
+                @Override
+                public boolean onQueryTextSubmit(String arg0) {
+                    return false;
+                }
+                // 検索ボックスの内容が変化した時
+                @Override
+                public boolean onQueryTextChange(String text) {
+                    if (text == null || text.equals("")) {
+                        list.clearTextFilter();
+                    } else {
+                        list.setFilterText(text);
+                    }
+                    return false;
                 }
             }
-        });
-
+        );
 
         list.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
             // 選択項目のチェック状態が変化した時
