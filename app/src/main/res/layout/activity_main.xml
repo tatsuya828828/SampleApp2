@@ -15,20 +15,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search" />
-
-    <!--  iconifiedByDefault属性は、デフォルトで虫眼鏡のアイコンだけを表示するかどうかを指定できる。
-          trueの場合は、アイコンをクリックして初めて検索ボックスが表示される。
-          falseでは、最初から検索ボックスが表示される。
-          queryHint属性は、hintと同じ役割をする。-->
-    <SearchView
-        android:id="@+id/search"
-        android:iconifiedByDefault="false"
-        android:queryHint="検索文字列を入力"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
