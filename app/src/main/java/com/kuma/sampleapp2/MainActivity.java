@@ -2,6 +2,7 @@ package com.kuma.sampleapp2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.LauncherActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ActionMode;
@@ -37,6 +38,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,28 +58,21 @@ public class MainActivity extends AppCompatActivity {
                 "モーツァルト作曲のオペラ「魔笛」の中のアリアです。",
                 "宮城道雄の作品です。曲の舞台は鞆の浦と言われています。"};
 
-        // 配列の内容をHashMapに詰め替え
-        // アダプター側では配列を処理できないため、配列の内容をHashMapのオブジェクト配列に詰め替えている
-        ArrayList<HashMap<String, String>> data = new ArrayList<>();
-        for(int i = 0; i < titles.length; i++) {
-            HashMap<String, String> item = new HashMap<>();
-            item.put("title", titles[i]);
-            item.put("tag", tags[i]);
-            item.put("desc", descs[i]);
+        // 配列の内容をListItemオブジェクトに詰め替え
+        // アダプターに渡すべきデータをListItemオブジェクト配列配列として用意している
+        ArrayList<ListItem> data = new ArrayList<>();
+        for(int i = 0; i <titles.length; i++) {
+            ListItem item =  new ListItem();
+            item.setId((new Random()).nextLong());
+            item.setTitle(titles[i]);
+            item.setTag(tags[i]);
+            item.setDesc(descs[i]);
             data.add(item);
         }
 
-        // HashMap配列とレイアウトとを関連付け
-        // HashMap配列ができたら、SimpleAdapterクラスでこれをレイアウトファイルに関連づける
-        // HashMap配列「data」の内容を、レイアウトファイルlist_item.xmlを使って
-        // リスト項目に整形しなさいという意味になる
-        SimpleAdapter adapter = new SimpleAdapter(
-            this, data, R.layout.list_item,
-            new String[] {"title", "tag", "desc"},
-            new int[] {R.id.title, R.id.tag, R.id.desc}
-        );
-
-        // アダプターを元にリストを生成
+        // ListItem配列とレイアウトを関連付け
+        // アダプターとして、自作のアダプターを指定
+        MyListAdapter adapter = new MyListAdapter(this, data, R.layout.list_item);
         ListView list = findViewById(R.id.list);
         list.setAdapter(adapter);
     }
