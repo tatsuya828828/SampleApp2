@@ -1,4 +1,4 @@
-package com.kuma.sampleapp2.listmyadapter;
+package com.kuma.sampleapp2;
 
 class ListItem {
     private long id = 0;

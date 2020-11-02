@@ -1,4 +1,4 @@
-package com.kuma.sampleapp2.listmyadapter;
+package com.kuma.sampleapp2;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.kuma.sampleapp2.ListItem;
 import com.kuma.sampleapp2.R;
 
 import java.util.ArrayList;
