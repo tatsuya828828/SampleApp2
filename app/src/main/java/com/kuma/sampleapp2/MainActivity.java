@@ -24,6 +24,7 @@ import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.SearchView;
 import android.widget.SeekBar;
+import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,84 +43,42 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // メインのレイアウトファイルactivity_main.xmlを関連付け
         setContentView(R.layout.activity_main);
 
-        // リスト項目をArrayListとして準備
-        final ArrayList<String> data = new ArrayList<>();
-        data.add("胡椒");
-        data.add("ターメリック");
-        data.add("コリアンダー");
-        data.add("生姜");
-        data.add("ニンニク");
-        data.add("サフラン");
+        // リストに表示するデータを準備
+        // タイトル・サブタイトル・詳細を表すデータを配列titles・tags・descsとして準備する。
+        String titles[] = {"革命のエチュード", "G線上のアリア", "シャコンヌ", "夜の女王のアリア", "春の海"};
+        String tags[] = {"ピアノ", "バイオリン", "チェロ", "声楽", "箏"};
+        String descs[] = {"ピアノの詩人と呼ばれたショパンの代表的な...",
+                "バッハの作品。バイオリンのG線のみで演奏できることから...",
+                "バッハの作品。パルティータ第2番の終曲です。",
+                "モーツァルト作曲のオペラ「魔笛」の中のアリアです。",
+                "宮城道雄の作品です。曲の舞台は鞆の浦と言われています。"};
 
-        // 配列アダプターを作成&ListViewに登録
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                // simple_list_item_multiple_choiceを適用
-            this, android.R.layout.simple_list_item_checked, data);
-        ListView list = findViewById(R.id.list);
-        list.setAdapter(adapter);
+        // 配列の内容をHashMapに詰め替え
+        // アダプター側では配列を処理できないため、配列の内容をHashMapのオブジェクト配列に詰め替えている
+        ArrayList<HashMap<String, String>> data = new ArrayList<>();
+        for(int i = 0; i < titles.length; i++) {
+            HashMap<String, String> item = new HashMap<>();
+            item.put("title", titles[i]);
+            item.put("tag", tags[i]);
+            item.put("desc", descs[i]);
+            data.add(item);
+        }
 
-        // フィルター機能を有効化
-        list.setTextFilterEnabled(true);
-
-        // 検索ボックスに入力された時の処理を定義
-        SearchView searchView = findViewById(R.id.search);
-        // フィルターに検索ボックスからの入力値を引き渡すには、OnQueryTextListenerイベントリスナーを利用する。
-        // これは、SearchViewへの入力を検知するためのイベントリスナーである。
-        searchView.setOnQueryTextListener(
-            new SearchView.OnQueryTextListener() {
-                // サブミットボタンをクリックした時(今回はないので不使用)
-                @Override
-                public boolean onQueryTextSubmit(String arg0) {
-                    return false;
-                }
-                // 検索ボックスの内容が変化した時
-                @Override
-                public boolean onQueryTextChange(String text) {
-                    if (text == null || text.equals("")) {
-                        list.clearTextFilter();
-                    } else {
-                        list.setFilterText(text);
-                    }
-                    return false;
-                }
-            }
+        // HashMap配列とレイアウトとを関連付け
+        // HashMap配列ができたら、SimpleAdapterクラスでこれをレイアウトファイルに関連づける
+        // HashMap配列「data」の内容を、レイアウトファイルlist_item.xmlを使って
+        // リスト項目に整形しなさいという意味になる
+        SimpleAdapter adapter = new SimpleAdapter(
+            this, data, R.layout.list_item,
+            new String[] {"title", "tag", "desc"},
+            new int[] {R.id.title, R.id.tag, R.id.desc}
         );
 
-        list.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
-            // 選択項目のチェック状態が変化した時
-            @Override
-            public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {}
-            // アクションモードを起動する時
-            @Override
-            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                return true;
-            }
-            // アクションモードの準備時
-            @Override
-            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                return true;
-            }
-            // 項目をクリックした時
-            @Override
-            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                return true;
-            }
-            // アクションモードを終了した時
-            @Override
-            public void onDestroyActionMode(ActionMode mode) {
-                StringBuilder msg = new StringBuilder("選択:");
-                // チェック状態の項目だけを追加
-                for(int i = 0; i < list.getChildCount(); i++) {
-                    CheckedTextView check = (CheckedTextView) list.getChildAt(i);
-                    if(check.isChecked()) {
-                        msg.append(check.getText()).append(",");
-                    }
-                }
-                Toast.makeText(MainActivity.this, msg.substring(0, msg.length() -1),
-                        Toast.LENGTH_LONG).show();
-            }
-        });
+        // アダプターを元にリストを生成
+        ListView list = findViewById(R.id.list);
+        list.setAdapter(adapter);
     }
 }
